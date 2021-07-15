@@ -1,25 +1,35 @@
 // create a Color Object which contains the various colors
 // create a Size Object which contains the various sizes
 // create a Fabric Object which contains the various fabrics
-var Color = require('./color')
+const Color         = require('./color')
+const Fabric        = require('./fabric')
+const Size          = require('./size')
+const TShirt        = require('./tshirt') 
+const FabricCost    = require('./fabriccost')
+const ProductPriceStrategy = require('./productpricestrategy')
+const labour = 4.5
+const profitRate = 30
 
-// const Color         = { Red: 'RED', Orange: 'ORANGE', Yellow: 'YELLOW', Green: 'GREEN', Blue: 'BLUE', Indigo: 'INDIGO', Violet: 'VIOLET' }
-const Size          = { XS: 'XS', S: 'S', M: 'M', L: 'L', XL: 'XL', XXL: 'XXL', XXXL: 'XXXL' }
-const Fabric        = { Wool: 'WOOL', Cotton: 'COTTON', Polyester: 'POLYESTER', Rayon: 'RAYON', Linen: 'LINEN', Cashmere: 'CASHEMERE', Silk: 'SILK' }
-const FabricPrices  = { Wool: 15, Cotton: 15.5, Polyester: 17, Rayon: 19.5, Linen: 34.5, Cashmere: 160, Silk: 250 }
-const CreditDebit = 1.2
-const MoneyBank   = 1.1
-const Cash        = 1
+// const FabricPrices  = { Wool: 15, Cotton: 15.5, Polyester: 17, Rayon: 19.5, Linen: 34.5, Cashmere: 160, Silk: 250 }
+const CreditDebit   = 1.2
+const MoneyBank     = 1.1
+const Cash          = 1
+
+let myColors        = new Color({ Red: 'RED', Orange: 'ORANGE', Yellow: 'YELLOW', Green: 'GREEN', Blue: 'BLUE', Indigo: 'INDIGO', Violet: 'VIOLET' })
+let mySizes         = new Size({ XS: 'XS', S: 'S', M: 'M', L: 'L', XL: 'XL', XXL: 'XXL', XXXL: 'XXXL' })
+let myFabrics       = new Fabric({ Wool: 'WOOL', Cotton: 'COTTON', Polyester: 'POLYESTER', Rayon: 'RAYON', Linen: 'LINEN', Cashmere: 'CASHEMERE', Silk: 'SILK' })
+let myFabricCosts   = new FabricCost({ Wool: 0.8, Cotton: 0.95, Polyester: 0.99, Rayon: 1.2, Linen: 2.7, Cashmere: 4.6, Silk: 7.2 })
+let myTShirt        = new TShirt(myColors.getColorByName('Red'), mySizes.getSizeByName('XS'), myFabrics.getFabricByName('Wool'))
+// Object.keys(Fabric)[Object.values(Fabric).indexOf(fabric)]
+myTShirt.price      = new ProductPriceStrategy(myFabricCosts, labour, profitRate, 'Wool').getPrice() 
+console.log(myTShirt)
 
 
-class TShirt {
-    constructor(color, size, fabric) {
-        this.color = color
-        this.size = size
-        this.fabric = fabric
-        this.price = FabricPrices[Object.keys(Fabric)[Object.values(Fabric).indexOf(fabric)]]
-    }
-}
+// 1. replace 'Wool' on lines 22, 24
+// 2. create a PaymentStrategy where you give the product (tshirt) and the selection of payment and returns the final price to pay
+// 3. For all 343 tshirts calculate the actual final prices for ALL of the Payment Strategies
+
+
 
 function buyATShirt(tshirt) {
     return { creditDebit: tshirt.price * CreditDebit, moneyBank: tshirt.price * MoneyBank, cash: tshirt.price }
@@ -38,9 +48,7 @@ function generateTShirts(Color, Size, Fabric, tshirts = []) {
     return tshirts
 }
 
-let myColors = new Color({ Red: 'RED', Orange: 'ORANGE', Yellow: 'YELLOW', Green: 'GREEN', Blue: 'BLUE', Indigo: 'INDIGO', Violet: 'VIOLET' })
-let myTShirt = new TShirt(myColors.getColorByName('Red'), Size.XS, Fabric.Wool)
-console.log(myTShirt)
+
 
 console.log(buyATShirt(myTShirt))
 // let tshirts = generateTShirts(Color,Size,Fabric)
