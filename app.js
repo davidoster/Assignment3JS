@@ -15,13 +15,14 @@ const CreditDebit   = 1.2
 const MoneyBank     = 1.1
 const Cash          = 1
 
-let myColors        = new Color({ Red: 'RED', Orange: 'ORANGE', Yellow: 'YELLOW', Green: 'GREEN', Blue: 'BLUE', Indigo: 'INDIGO', Violet: 'VIOLET' })
+let myColors        = new Color({ RedGreen: 'REDGREEN', Red: 'RED', Orange: 'ORANGE', Yellow: 'YELLOW', Green: 'GREEN', Blue: 'BLUE', Indigo: 'INDIGO', Violet: 'VIOLET' })
 let mySizes         = new Size({ XS: 'XS', S: 'S', M: 'M', L: 'L', XL: 'XL', XXL: 'XXL', XXXL: 'XXXL' })
 let myFabrics       = new Fabric({ Wool: 'WOOL', Cotton: 'COTTON', Polyester: 'POLYESTER', Rayon: 'RAYON', Linen: 'LINEN', Cashmere: 'CASHEMERE', Silk: 'SILK' })
 let myFabricCosts   = new FabricCost({ Wool: 0.8, Cotton: 0.95, Polyester: 0.99, Rayon: 1.2, Linen: 2.7, Cashmere: 4.6, Silk: 7.2 })
 let myTShirt        = new TShirt(myColors.getColorByName('Red'), mySizes.getSizeByName('XS'), myFabrics.getFabricByName('Wool')) // 1. e.g. Fabric.Wool
 // Object.keys(Fabric)[Object.values(Fabric).indexOf(fabric)]
 myTShirt.price      = new ProductPriceStrategy(myFabricCosts, labour, profitRate, 'Wool').getPrice() // 2. myTShirt..... fabric
+// myTShirt.price      = new ProductPriceStrategy2022(myFabricCosts, labour, profitRate, 'Wool').getPrice() // 2. myTShirt..... fabric
 console.log(myTShirt)
 
 
